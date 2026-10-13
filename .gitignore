@@ -1,8 +1,12 @@
 node_modules/
 dist/
+.env
+.env.*
+!.env.example
 .openai/*.local.*
 playwright-report/
 test-results/
 .DS_Store
 artifacts/
 .pnpm-store/
+*.log
