@@ -88,6 +88,10 @@ const ScrollExpand = ({
       const iw = media.naturalWidth || 1600;
       const ih = media.naturalHeight || 901;
       const fit = compact ? Math.min(width / iw, height / ih) : Math.max(width / iw, height / ih);
+      if (compact) {
+        const fillZoom = Math.max(width / iw, height / ih) / fit;
+        media.style.transform = `scale(${1 + (fillZoom - 1) * smoothstep(.9, 1, p)})`;
+      }
       const zoom = compact ? 1 : c.mediaZoom + (1 - c.mediaZoom) * e;
       const active = p < .04 || p >= .9 ? -1 : Math.min(c.annotations.length - 1, Math.floor((p - .04) / .215));
       annotationRef.current.dataset.step = String(active);
