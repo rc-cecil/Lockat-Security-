@@ -29,6 +29,8 @@ const ScrollExpand = ({
   overlayScrim = 0.45,
   useWindowScroll = false,
   enabled = true,
+  annotations = [],
+  startAnchorY = 50,
   children,
   className = '',
   style,
@@ -43,6 +45,7 @@ const ScrollExpand = ({
   const overlayRef = useRef(null);
   const scrimRef = useRef(null);
   const hintRef = useRef(null);
+  const annotationRef = useRef(null);
 
   const propsRef = useRef({});
   propsRef.current = {
@@ -56,7 +59,9 @@ const ScrollExpand = ({
     smoothing,
     overlayScrim,
     useWindowScroll,
-    enabled
+    enabled,
+    annotations,
+    startAnchorY
   };
 
   const applyProgress = useCallback(p => {
@@ -70,11 +75,34 @@ const ScrollExpand = ({
     const w = c.startWidth + (100 - c.startWidth) * e;
     const h = c.startHeight + (100 - c.startHeight) * e;
     const ix = Math.max(0, (100 - w) / 2);
-    const iy = Math.max(0, (100 - h) / 2);
+    const topInset = (100 - h) * (c.startAnchorY + (50 - c.startAnchorY) * e) / 100;
     const r = c.startRadius + (c.endRadius - c.startRadius) * e;
-    frame.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px)`;
+    frame.style.clipPath = `inset(${topInset}% ${ix}% ${100 - h - topInset}% ${ix}% round ${r}px)`;
 
     media.style.transform = `scale(${c.mediaZoom + (1 - c.mediaZoom) * e})`;
+
+    if (annotationRef.current) {
+      const compact = window.innerWidth < 768;
+      const width = frame.clientWidth;
+      const height = frame.clientHeight;
+      const iw = media.naturalWidth || 1600;
+      const ih = media.naturalHeight || 901;
+      const fit = compact ? Math.min(width / iw, height / ih) : Math.max(width / iw, height / ih);
+      const zoom = compact ? 1 : c.mediaZoom + (1 - c.mediaZoom) * e;
+      const active = p < .04 ? -1 : Math.min(c.annotations.length - 1, Math.floor((p - .04) / .24));
+      annotationRef.current.dataset.step = String(active);
+      [...annotationRef.current.children].forEach((node, i) => {
+        const item = c.annotations[i];
+        const x = width / 2 + (item.x - .5) * iw * fit * zoom;
+        const y = height / 2 + (item.y - .5) * ih * fit * zoom;
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+        const label = node.querySelector('.hero-annotation__label');
+        label.style.left = `${Math.max(width * ix / 100 + 14, Math.min(width * (1 - ix / 100) - 194, x - 192)) - x}px`;
+        label.style.top = i === 3 ? '22px' : '-76px';
+        node.dataset.active = String(i === active);
+      });
+    }
 
     if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
 
@@ -116,6 +144,7 @@ const ScrollExpand = ({
     const measure = () => {
       const c = propsRef.current;
       stageH = c.useWindowScroll ? Math.min(window.innerHeight - (window.innerWidth < 1024 ? 72 : 78), 740) : root.clientHeight;
+      if (c.annotations.length && window.innerWidth < 768) stageH = reduceMotion ? 260 : 350;
       if (stageH <= 0) return;
       stage.style.height = `${stageH}px`;
       track.style.height = `${stageH * (c.enabled && !reduceMotion ? 1 + Math.max(0, c.scrollDistance) + Math.max(0, c.holdDistance) : 1)}px`;
@@ -217,6 +246,12 @@ const ScrollExpand = ({
           <div ref={frameRef} className="scroll-expand__frame">
             {media}
             <div ref={scrimRef} className="scroll-expand__scrim" />
+            {annotations.length > 0 && <div ref={annotationRef} className="hero-annotations" aria-hidden="true">
+              {annotations.map((item, index) => <div className="hero-annotation" key={item.title}>
+                <span className="hero-annotation__point" />
+                <span className="hero-annotation__label"><small>0{index + 1}</small><span><strong>{item.title}</strong><span>{item.caption}</span></span></span>
+              </div>)}
+            </div>}
             {children ? (
               <div ref={overlayRef} className="scroll-expand__overlay">
                 {children}
