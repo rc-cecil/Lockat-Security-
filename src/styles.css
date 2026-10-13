@@ -50,3 +50,11 @@
 .hero-tour-summary{position:relative;width:auto;height:auto;clip-path:none;display:flex;flex-wrap:wrap;gap:12px 28px;padding:22px 7%;list-style:none;font-size:12px;line-height:1.6}
 }
 @media(max-width:767px) and (prefers-reduced-motion:reduce){.hero-media .hero-tour .scroll-expand__track,.hero-media .hero-tour .scroll-expand__stage{height:260px!important}.hero-tour-summary{display:grid;gap:8px}}
+.hero-tour .scroll-expand__overlay{z-index:3}
+@media(max-width:767px){
+.hero-media .hero-tour .scroll-expand__overlay{display:flex!important;padding:30px;justify-content:center}
+.hero-media .hero-tour .scroll-expand__scrim{display:block!important}
+.hero-tour .expanded-copy h2{font-size:28px}
+.hero-tour .expanded-copy p{font-size:12px;max-width:260px;margin-top:12px}
+.hero-tour .expanded-copy .button{margin-top:18px;padding:12px 17px;font-size:11px}
+}

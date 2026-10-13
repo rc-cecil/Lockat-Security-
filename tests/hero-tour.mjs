@@ -4,7 +4,7 @@ const browser=await chromium.launch({executablePath:'/Applications/Google Chrome
 const page=await browser.newPage();
 for(const width of [375,1366]){
  await page.setViewportSize({width,height:900});await page.goto('http://127.0.0.1:5173/',{waitUntil:'networkidle'});
- for(const [i,p] of [.16,.4,.64,.92].entries()){
+ for(const [i,p] of [.16,.4,.64,.82].entries()){
   await page.evaluate(p=>{const track=document.querySelector('.hero-tour .scroll-expand__track');const h=document.querySelector('.hero-tour .scroll-expand__stage').clientHeight;window.scrollTo({top:track.getBoundingClientRect().top+scrollY-(innerWidth<1024?72:78)+h*1.65*p,behavior:'instant'})},p);
   await page.waitForTimeout(400);
   assert.equal(await page.locator('.hero-annotations').getAttribute('data-step'),String(i));
@@ -12,6 +12,12 @@ for(const width of [375,1366]){
   assert(marker.x>0 && marker.x<width);
   await page.screenshot({path:`artifacts/hero-${width}-${i}.png`});
  }
+ await page.evaluate(()=>{const t=document.querySelector('.hero-tour .scroll-expand__track');const h=document.querySelector('.hero-tour .scroll-expand__stage').clientHeight;window.scrollTo({top:t.getBoundingClientRect().top+scrollY-(innerWidth<1024?72:78)+h*1.65,behavior:'instant'})});
+ await page.waitForTimeout(600);
+ assert.equal(await page.locator('.hero-annotations').getAttribute('data-step'),'-1');
+ assert.equal(await page.locator('.hero-tour .scroll-expand__overlay').getAttribute('aria-hidden'),'false');
+ await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.hero-tour .scroll-expand__scrim')).opacity)>.7);
+ await page.screenshot({path:`artifacts/hero-${width}-expanded.png`});
 }
 await page.emulateMedia({reducedMotion:'reduce'});await page.reload();assert.equal(await page.locator('.hero-tour-summary').evaluate(e=>getComputedStyle(e).position),'relative');
 console.log('PASS four sequential annotations at desktop/mobile and static reduced-motion summary.');await browser.close();

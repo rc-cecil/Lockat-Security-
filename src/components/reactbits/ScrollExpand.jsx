@@ -89,7 +89,7 @@ const ScrollExpand = ({
       const ih = media.naturalHeight || 901;
       const fit = compact ? Math.min(width / iw, height / ih) : Math.max(width / iw, height / ih);
       const zoom = compact ? 1 : c.mediaZoom + (1 - c.mediaZoom) * e;
-      const active = p < .04 ? -1 : Math.min(c.annotations.length - 1, Math.floor((p - .04) / .24));
+      const active = p < .04 || p >= .9 ? -1 : Math.min(c.annotations.length - 1, Math.floor((p - .04) / .215));
       annotationRef.current.dataset.step = String(active);
       [...annotationRef.current.children].forEach((node, i) => {
         const item = c.annotations[i];
@@ -107,7 +107,7 @@ const ScrollExpand = ({
       });
     }
 
-    if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
+    if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * (c.annotations.length ? smoothstep(.88, 1, p) : e)}`;
 
     if (titleRef.current) {
       const out = smoothstep(0.4, 0.88, p);
@@ -124,7 +124,7 @@ const ScrollExpand = ({
     if (overlayRef.current) {
       overlayRef.current.inert = p < 0.9;
       overlayRef.current.setAttribute('aria-hidden', p < 0.9 ? 'true' : 'false');
-      const inn = smoothstep(0.68, 1, p);
+      const inn = smoothstep(c.annotations.length ? .9 : .68, 1, p);
       overlayRef.current.style.opacity = `${inn}`;
       overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
     }
