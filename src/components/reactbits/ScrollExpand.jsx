@@ -98,8 +98,11 @@ const ScrollExpand = ({
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
         const label = node.querySelector('.hero-annotation__label');
-        label.style.left = `${Math.max(width * ix / 100 + 14, Math.min(width * (1 - ix / 100) - 194, x - 192)) - x}px`;
-        label.style.top = i === 3 ? '22px' : '-76px';
+        const labelX = Math.max(width * ix / 100 + 14, Math.min(width * (1 - ix / 100) - 194, x - 192)) - x;
+        const labelY = i === 3 ? 28 : -76;
+        label.style.left = `${labelX}px`;
+        label.style.top = `${labelY}px`;
+        node.querySelector('path').setAttribute('d', `M ${labelX} ${labelY + 46} H ${labelX + 156} L 0 0`);
         node.dataset.active = String(i === active);
       });
     }
@@ -247,9 +250,10 @@ const ScrollExpand = ({
             {media}
             <div ref={scrimRef} className="scroll-expand__scrim" />
             {annotations.length > 0 && <div ref={annotationRef} className="hero-annotations" aria-hidden="true">
-              {annotations.map((item, index) => <div className="hero-annotation" key={item.title}>
+              {annotations.map((item) => <div className="hero-annotation" key={item.title}>
+                <svg className="hero-annotation__line" aria-hidden="true"><path pathLength="1" /></svg>
                 <span className="hero-annotation__point" />
-                <span className="hero-annotation__label"><small>0{index + 1}</small><span><strong>{item.title}</strong><span>{item.caption}</span></span></span>
+                <span className="hero-annotation__label"><span><strong>{item.title}</strong><span>{item.caption}</span></span></span>
               </div>)}
             </div>}
             {children ? (
