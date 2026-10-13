@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lockat-security.candidlamp5.chatgpt.site/sitemap.xml

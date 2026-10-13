@@ -1,0 +1,3 @@
+import {useEffect,useRef} from 'react';
+import {X} from 'lucide-react';
+export default function Modal({title,children,onClose}){const ref=useRef();useEffect(()=>{const previous=document.activeElement;const dialog=ref.current;dialog.showModal();const before=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{dialog.close();document.body.style.overflow=before;previous?.focus();};},[]);return <dialog ref={ref} className="modal" aria-labelledby="dialog-title" onCancel={onClose} onClick={e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal-body"><button className="icon-button modal-close" aria-label="Close details" onClick={onClose}><X/></button><h2 id="dialog-title">{title}</h2>{children}</div></dialog>}
