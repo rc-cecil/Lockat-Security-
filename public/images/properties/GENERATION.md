@@ -30,3 +30,7 @@ Other supplied service and product images were visually inspected. They are stil
 Replaced `../hero/lockat-security-property.webp` with a dedicated wide architectural photo showing a contemporary Accra villa, charcoal sliding gate, small eave camera and subtle perimeter-security hardware in natural installed scale. No collage, logos, or manufacturer marks. Prompt: high-end photoreal architectural photography, cool-white plaster, blue-grey glazing, graphite metal, restrained tropical landscaping, clear morning light, no people or cars. Source `exec-e3f5c5b9-d0ef-4db5-9c2e-eff83c62f023.png`, WebP quality 82, width 1600.
 
 Final replacement product images are 600px wide and replacement service images 960px wide, superseding the 1000px dimensions above. Property images remain 1536x1024.
+
+## Businesses & Offices revision
+
+`offices-v2.webp` replaces the office concept in property cards and dialogs. Generated 13 October 2026: clearly commercial three-storey Accra office building, cool white plaster, blue-grey glass, charcoal shading fins, visible reception, security gate and subtle real-scale camera; no logos or lettering. Source `exec-c6ab3c21-26e4-4f2a-8a34-b38d3f484cb1.png`. Optimized to 1536px wide WebP quality 83. Illustrative architecture, not a verified installed project.

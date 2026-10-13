@@ -16,3 +16,11 @@ Bright architectural security experience, approved by the user. Audience: homeow
 
 ## Guidance applied
 Taste provides composition and hierarchy. Emil Kowalski provides responsive press feedback, restrained easing, clear motion purpose and cleanup. Impeccable provides spacing, contrast, browser-state and complete-experience review. Humanizer provides direct supported copy. The user-approved plan takes priority over any conflicting default skill style or extra confirmation workflow.
+
+## Curated React Bits refinement
+
+- BlurText: brief word-level focus reveal for the hero and About heading, static with reduced motion. Semantic headings and accessible text are preserved.
+- GlareHover: a restrained optical sheen over property imagery on pointer hover; no idle loop, no touch effect.
+- Magnet: quote buttons gently respond within 5px, with keyboard/mobile/reduced-motion safeguards.
+- Product category changes use short layout transitions. Native details and dialogs retain semantics with brief entrances.
+- Keep the architectural imagery and interactive security tour as the visual anchors.

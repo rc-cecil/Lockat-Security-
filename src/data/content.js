@@ -18,7 +18,7 @@ export const products=[
 ];
 export const properties=[
 {id:'home',name:'Homes & Apartments',image:'homes',description:'Feel more at home. See visitors, manage entry and keep an eye on your surroundings.',services:['cctv','gate','intercom']},
-{id:'business',name:'Businesses & Offices',image:'businesses',description:'Connect workplace entry, surveillance and alarms around the way your team works.',services:['cctv','access','alarm']},
+{id:'business',name:'Businesses & Offices',image:'offices-v2',description:'Connect workplace entry, surveillance and alarms around the way your team works.',services:['cctv','access','alarm']},
 {id:'school',name:'Schools',image:'schools',description:'Plan visibility and controlled entry around school buildings and their boundaries.',services:['cctv','fence','access']},
 {id:'estate',name:'Estates & Developments',image:'estates',description:'Bring gate access, perimeter protection and visitor communication together.',services:['fence','gate','intercom','cctv']}
 ];

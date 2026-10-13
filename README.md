@@ -1,6 +1,6 @@
 # LOCKAT Security Systems
 
-React/Vite landing page with five supplied React Bits components, a procedural React Three Fiber property, product enquiries, and a WhatsApp quotation workflow.
+React/Vite landing page with curated React Bits components, a procedural React Three Fiber property, product enquiries, and a WhatsApp quotation workflow.
 
 ## Local development
 
@@ -30,7 +30,9 @@ The theme toggle persists only the theme setting. User contact data and enquiry 
 
 Original user-provided JSX/CSS is under `src/components/reactbits`. Integration changes preserve component APIs and fix React StrictMode canvas cleanup, hidden overlay focus, reduced-motion behavior, viewport sizing and mobile stack fallback. ScrollStack smoothing/snap are disabled. React Bits registry configuration is in `components.json`.
 
-Codex shadcn MCP is configured through the available bundled pnpm runtime. Restart Codex to connect it. Components were integrated from the supplied complete source files while MCP was unavailable.
+Codex shadcn MCP is connected. The workspace-root `components.json` exposes the registry to MCP; the app's own `components.json` and `jsconfig.json` configure registry installation and aliases. Both use `@react-bits` → `https://reactbits.dev/r/{name}.json`. Registry search and examples were verified through MCP.
+
+BlurText, GlareHover and Magnet were installed directly using the official shadcn registry. BlurText has an additive semantic `as` prop and reduced-motion/readable text fallback. GlareHover uses a transparent image sheen and ignores touch/reduced motion. Magnet has a 5px maximum offset on quote buttons, disables on mobile/reduced motion, and yields to keyboard focus. Product filter layout, dialog entrances and FAQ content transitions use Motion/native CSS. No new animation runtime dependency was needed.
 
 ## Hosting
 
